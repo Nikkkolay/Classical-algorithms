@@ -1,0 +1,19 @@
+КОНСТРУКТОР:
+ Matrix(unsigned int S,unsigned int C);
+выделяется память на массив типа double 
+где S-колличество строк, C-колличество столбцов
+
+СЕТТОРЫ И ГЕТТОРЫ:
+ unsigned int getStrings()-возращает текущее кол-во строк
+ unsigned int getColumns()-возращает текущее кол-во столбцов
+ double& at(unsigned int i,unsigned int j)-используется для
+доступа к элементу матрицы i-той строки j-того столбца
+
+ОСТАЛЬНЫЕ МЕТОДЫ:
+ void deleteString(unsigned int numSt)-удаляет строчку под 
+номером numSt
+ void deleteColumns(unsigned int numCo)-удаляет коллонку под
+номером numCo
+ void PerSrings(unsigned int a,unsigned int b)//PermutationSrings-
+меняет а-тую и b-тую строку местами
+ void show()-выводит матрицу в консоль

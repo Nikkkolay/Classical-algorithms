@@ -1,0 +1,179 @@
+#includeiostream
+#includeconio.h
+#includecmath
+#includecstdlib
+#includectime
+using namespace std;
+
+class Matrix
+{
+private
+    double Mat;
+    unsigned int numStrings,numColumns;
+public
+    Matrix(unsigned int S,unsigned int C)numStrings(S),numColumns(C)конструктор и деструктор
+     {
+       Mat=new double[numStrings];
+       for(int i=0;inumStrings;i++)
+         Mat[i]=new double[numColumns];
+     }
+    ~Matrix()
+     {
+         for(int i=0;inumStrings;i++)
+            delete[] Mat[i];
+         delete[] Mat;
+     }
+     методы
+     void show()
+     {
+         for(int i=0;inumStrings;i++)
+                for(int k=0;knumColumns;k++)
+                 {
+                     coutMat[i][k];
+                      if(k==numColumns-1) coutendl;
+                        else cout' ';
+                 }
+     }
+
+     double& at(unsigned int i,unsigned int j)
+     {
+         if(inumStrings&&jnumColumns)
+            return Mat[i][j];
+         else
+         {
+          coutYor are traying tp access an element that doesn't existendl;
+          return Mat[0][0];
+         }
+     }
+
+     void deleteString(unsigned int numSt)
+     {
+         if(numStnumStrings&&numSt=0)
+         {
+          for(int i=numSt;inumStrings-1;i++)
+            Mat[i]=Mat[i+1];
+          delete[] Mat[--numStrings];
+
+            double tmp=new double[numStrings];
+            for(int i=0;inumStrings;i++)
+                tmp[i]=Mat[i];
+            delete[] Mat;
+            Mat=new double[numStrings];
+            for(int i=0;inumStrings;i++)
+                Mat[i]=tmp[i];
+            delete[] tmp;
+         } else coutError in deleteStringendl;
+     }
+
+     void deleteColumns(unsigned int numCo)
+     {
+         if(numConumColumns)
+         {
+             double temp=new double[numColumns-1];
+             for(int i=0;inumStrings;i++)
+             {
+              int index=0;
+              for(int j=0;jnumColumns;j++)
+                  if(j!=numCo) temp[index++]=Mat[i][j];
+              delete[] Mat[i];
+              Mat[i]=new double[numColumns-1];
+              for(int k=0;knumColumns;k++)
+                Mat[i][k]=temp[k];
+             }
+             delete[] temp;
+             numColumns--;
+         }
+     }
+
+    void PerSrings(int a,int b)PermutationSrings
+     {
+         if(anumStrings&&bnumStrings)
+         {
+           double c=Mat[a];
+           Mat[a]=Mat[b];
+           Mat[b]=c;
+           coutDA;
+         }else coutError in PermutationSringsendl;
+
+
+     }
+     unsigned int getStrings()
+     {return numStrings;}
+     unsigned int getColumns()
+     {return numColumns;}
+};
+
+int main()
+{
+double eps=0.000001;
+int N,M;
+coutEnter number of strings ;
+cinN;
+coutEnter number of columns ;
+cinM;
+
+Matrix A(N,M);вызов конструктора
+
+for(int i=0;iA.getStrings();i++)
+    for(int j=0;jA.getColumns();j++)
+     A.at(i,j)=rand()%10;доделать рандом
+     A.at(0,0)=3;A.at(0,1)=2;A.at(0,2)=-1;A.at(0,3)=0;
+     A.at(1,0)=3;A.at(1,1)=4;A.at(1,2)=-6;A.at(1,3)=0;
+     A.at(2,0)=3;A.at(2,1)=2;A.at(2,2)=-5;A.at(2,3)=0;
+
+A.show();
+coutendl;
+
+int idx=0;                                           вызов геттеров
+for(int i=0;iA.getStrings()&&idxA.getColumns();i++)приводим к трапецевидному виду
+{
+    if(fabs(A.at(i,idx))=eps)проверка главной диагонали
+    {
+        bool check=false;
+        for(int j=i;jA.getStrings();j++)
+            if(fabs(A.at(j,idx))=eps)
+             {
+               A.PerSrings(i,j);
+               check=true;
+               break;
+             }
+        if(check==false)
+         {
+          idx++;
+          i--;
+          continue;;
+         }
+    }
+
+   for(int j=i;jA.getStrings();j++)приводим коллонку к 1
+    if(fabs(A.at(j,idx))eps)
+    {
+     double tmp=A.at(j,idx);
+       for(int k=idx;kA.getColumns();k++)
+        A.at(j,k)=A.at(j,k)tmp;
+    }
+
+   for(int j=i+1;jA.getStrings();j++)вычитание
+       if(fabs(A.at(j,idx))eps)
+         for(int k=idx;kA.getColumns();k++)
+        A.at(j,k)=A.at(j,k)-A.at(i,k);
+
+idx++;
+}
+
+for(int i=0;iA.getStrings();i++)удаляем пустые строки
+{
+    bool check=false;
+    for(int j=0;jA.getColumns();j++)
+        if(fabs(A.at(i,j)=eps)) check=true;
+    if(check==false) {A.deleteString(i);i--;}
+}
+
+if(A.getStrings()0)
+ {A.show();coutendlRank matrix=A.getStrings()endl;}
+   else coutendlIs the zero matrix, the rank is 0n;
+
+   if(A.at(2,3)0) cout men`he;
+   getch();
+   return 0;
+}
